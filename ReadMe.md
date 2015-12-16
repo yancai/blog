@@ -28,7 +28,7 @@
     │
     ├─api               -- 数据查询接口
     ├─in
-    │  │  About.md  -- 博客撰写方法说明方法
+    │  │  About.md  -- 博客撰写方法说明
     │
     ├─static        -- 静态资源文件夹
     │  │  favicon.ico
