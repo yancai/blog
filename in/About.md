@@ -1,6 +1,6 @@
 title: 关于
 summary: 介绍本博客的基本功能
-authors: 蔡岩
+authors: yancai
 publish_date: 2015-12-15
 tags: 简介
       Markdown
@@ -43,7 +43,7 @@ META支持作者为Markdown文件添加自定义的一些信息，这些自定�
 
     title: 简介
     summary: 介绍本博客的基本功能
-    authors: 蔡岩
+    authors: yancai
     publish_date: 2015-12-15
     tags: 简介
           Markdown

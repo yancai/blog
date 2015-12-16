@@ -1,7 +1,7 @@
 # 简介
 
 本工程是一个基于[Flask](http://flask.pocoo.org/)和[Python Markdown](https://pythonhosted.org/Markdown/)开发的简易博客。
-本博客支持基本的Markdown语法，并且支持table和Meta信息，具体参见[About.md](https://github.com/yancai/blog/blob/master/in/About.md)
+本博客支持基本的Markdown语法，并且支持table和Meta信息，具体参见[About.md](in/About.md)
 
 # 工程依赖包安装
 
@@ -39,3 +39,7 @@
     ├─templates     -- html模板
     └─utils         -- 工具类
     
+
+# 示例
+
+![screenshot](static/images/screenshot.png)
