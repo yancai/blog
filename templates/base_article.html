@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block head %}
+    <link href="{{ static_root }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ static_root }}css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ static_root }}css/pygments/default.css" rel="stylesheet">
+    <link href="{{ static_root }}css/blog/general.css" rel="stylesheet">
+
+    <style type="text/css">
+        h2:before {
+            content: "";
+            display: block;
+            height: 55px;
+            margin: -55px 0 0;
+        }
+
+        .side-icon {
+            margin-right: 5px;
+        }
+
+        .side-hr {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-module {
+            max-width: 200px;
+        }
+
+        .sidebar-title {
+            font-weight: 700;
+        }
+
+        .bs-docs-sidebar.affix {
+            position: static;
+        }
+
+        .bs-docs-sidebar.affix {
+            position: static;
+        }
+
+        @media (min-width: 768px) {
+            .bs-docs-sidebar {
+                padding-left: 20px;
+            }
+        }
+
+        .bs-docs-sidenav {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .bs-docs-sidebar .nav > li > a {
+            display: block;
+            padding: 4px 20px;
+            color: #767676;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .bs-docs-sidebar .nav > li > a:focus, .bs-docs-sidebar .nav > li > a:hover {
+            padding-left: 19px;
+            border-left: 1px solid #0088cc;
+            background-color: transparent;
+            color: #0088cc;
+            text-decoration: none;
+        }
+
+        .bs-docs-sidebar .nav > .active:focus > a, .bs-docs-sidebar .nav > .active:hover > a, .bs-docs-sidebar .nav > .active > a {
+            padding-left: 18px;
+            border-left: 2px solid #0088cc;
+            background-color: transparent;
+            color: #0088cc;
+            font-weight: 700;
+        }
+
+        .bs-docs-sidebar .nav .nav {
+            display: none;
+            padding-bottom: 10px;
+        }
+
+        .bs-docs-sidebar .nav .nav > li > a {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 30px;
+            font-weight: 400;
+            font-size: 9pt;
+        }
+
+        .bs-docs-sidebar .nav .nav > li > a:focus, .bs-docs-sidebar .nav .nav > li > a:hover {
+            padding-left: 29px;
+        }
+
+        .bs-docs-sidebar .nav .nav > .active:focus > a, .bs-docs-sidebar .nav .nav > .active:hover > a, .bs-docs-sidebar .nav .nav > .active > a {
+            padding-left: 28px;
+            font-weight: 500;
+        }
+
+        @media (min-width: 992px) {
+            .bs-docs-sidebar .nav > .active > ul {
+                display: block;
+            }
+
+            .bs-docs-sidebar.affix, .bs-docs-sidebar.affix-bottom {
+                width: 213px;
+            }
+
+            .bs-docs-sidebar.affix {
+                position: fixed;
+                top: 20px;
+            }
+
+            .bs-docs-sidebar.affix-bottom {
+                position: absolute;
+            }
+
+            .bs-docs-sidebar.affix .bs-docs-sidenav, .bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+        }
+
+        @media (min-width: 1200px) {
+            .bs-docs-sidebar.affix, .bs-docs-sidebar.affix-bottom {
+                width: 263px;
+            }
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block body_prop %}data-spy="scroll" data-target="#side-menu"{% endblock %}
+
+{% block articles_url %}/articles/{% endblock %}
+{% block tags_url %}/tags/{% endblock %}
+{% block about_url %}/about{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8 blog-main">
+                {{ blog_content }}
+            </div>
+
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module" data-spy="affix">
+                    {{ title_html }}
+                    <div class="sidebar-module-inset">
+                        <h5 class="sidebar-title"><i class="icon-lightbulb side-icon"></i>摘要</h5>
+
+                        <p>{{ summary }}</p>
+                    </div>
+                    <hr class="side-hr">
+                    <div>
+                        <h5 class="sidebar-title"><i class="icon-user side-icon"></i>作者</h5>
+                        <div>{{ authors }}</div>
+                    </div>
+                    <hr class="side-hr">
+                    <div>
+                        <h5 class="sidebar-title"><i class="icon-tags side-icon"></i>标签</h5>
+                        <div>{{ tags }}</div>
+                    </div>
+                    <hr class="side-hr">
+                    <div class="sidebar-module">
+                        <h5 class="sidebar-title"><i class="icon-th-list side-icon"></i>目录</h5>
+                        <nav id="side-menu" class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
+                            {{ toc }}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block ext_js %}
+    <script src="{{ static_root }}js/third/jquery.min.js"></script>
+    <script src="{{ static_root }}js/third/bootstrap.min.js"></script>
+    <script type="application/javascript">
+        $(".toc ul").addClass("nav");
+        $(".toc ul:first").addClass("bs-docs-sidenav");
+        $("table").addClass("table table-striped table-bordered table-hover")
+    </script>
+{% endblock %}

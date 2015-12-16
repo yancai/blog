@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog/general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+{% endblock %}
+
+{% block articles_url %}
+    {{ url_for("page_articles") }}
+{% endblock %}
+
+{% block tags_url %}
+    {{ url_for("page_tags") }}
+{% endblock %}
+
+{% block about_url %}
+    {{ url_for("page_about") }}
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/third/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/third/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/src/base.js') }}"></script>
+{% endblock %}

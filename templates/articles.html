@@ -1,0 +1,21 @@
+{% extends "base_page.html" %}
+
+{% block title %}
+    文章列表
+{% endblock %}
+
+{% block content %}
+    <div class="container theme-showcase" style="min-height: 600px">
+        <div>
+            <h1>文章列表</h1>
+        </div>
+
+        <div id="article_item">
+        </div>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/src/articles.js') }}"></script>
+{% endblock %}

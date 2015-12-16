@@ -1,0 +1,26 @@
+{% extends "base_page.html" %}
+
+{% block title %}
+    所有标签
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container theme-showcase" style="min-height: 600px">
+        <div>
+            <h1>所有标签</h1>
+        </div>
+
+        <dl id="tags" class="dl-horizontal">
+        </dl>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/src/tags.js') }}"></script>
+{% endblock %}

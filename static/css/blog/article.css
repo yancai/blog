@@ -1,0 +1,11 @@
+
+h2:before {
+    content: "";
+    display: block;
+    height: 55px;
+    margin: -55px 0 0;
+}
+
+.sidebar-title {
+    font-weight: 700;
+}

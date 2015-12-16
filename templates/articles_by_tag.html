@@ -1,0 +1,24 @@
+{% extends "base_page.html" %}
+
+{% block title %}
+    标签:{{ tag }}
+{% endblock %}
+
+{% block content %}
+    <div class="container theme-showcase" style="min-height: 600px">
+        <div>
+            <span class="h3">标签：</span>
+            <span id="tag" class="h1 text-info">{{ tag }}</span>
+            <span class="h5" id="count"></span>
+            <hr>
+        </div>
+
+        <div id="article_item">
+        </div>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/src/articles_by_tag.js') }}"></script>
+{% endblock %}
