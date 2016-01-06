@@ -28,7 +28,7 @@ def page_index():
 def page_about():
     """页面-关于
     """
-    return app.send_static_file("out/about.html")
+    return app.send_static_file("out/About.html")
 
 
 @app.route("/article/<aid>/")
