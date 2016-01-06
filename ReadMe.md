@@ -7,7 +7,7 @@
 
 本工程主要依赖于Flask、Jinja2，具体参见requirement.txt
 
-    pip install -f requirements.txt
+    pip install -r requirements.txt
 
 
 # 基本用法
