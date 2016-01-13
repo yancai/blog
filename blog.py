@@ -10,6 +10,16 @@ from api.views import api
 app = Flask(__name__)
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template("500.html"), 500
+
+
 @app.route("/favicon.ico")
 def get_favicon():
     """favicon.ico
@@ -59,6 +69,10 @@ def page_article_by_tag(tag):
     return render_template("articles_by_tag.html", tag=tag)
 
 
+@app.route("/upload")
+def page_upload():
+    return render_template("upload.html")
+
 # 注册api接口的blueprint
 app.register_blueprint(api, url_prefix="/api")
 
@@ -66,6 +80,6 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=5000,
-        debug=True,
+        debug=False,
     )
     pass

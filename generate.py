@@ -52,6 +52,18 @@ AUTHOR_HTML_TEMPLATE = u"<a href='' class='tag-index'>{author}</a>"
 TITLE_HTML_TEMPLATE = u"<div class='sidebar-module-inset'><h5 class='sidebar-title'><i class='icon-circle-blank side-icon'></i>标题</h5><p>{title_str}</p></div>"
 
 
+def _reload_global():
+    global TAG_INVERTED_INDEX, AUTHOR_INVERTED_INDEX, ARTICLE_INDEX,\
+        _MD_FILES, _current_file_index, _pinyin_names
+
+    TAG_INVERTED_INDEX = {}
+    AUTHOR_INVERTED_INDEX = {}
+    ARTICLE_INDEX = {}
+    _MD_FILES = []
+    _current_file_index = None
+    _pinyin_names = set()
+
+
 def clean():
     """清理输出文件夹
     """
@@ -260,7 +272,8 @@ def load_md_files(folder):
                 _MD_FILES.append(os.path.join(root, f))
 
 
-def main():
+def generate():
+    _reload_global()
     clean()
 
     load_md_files(INPUT_CONTENT)
@@ -270,5 +283,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    generate()
     pass

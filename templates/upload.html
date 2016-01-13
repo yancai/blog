@@ -1,0 +1,24 @@
+{% extends "base_page.html" %}
+
+{% block title %}
+    文件上传
+{% endblock %}
+
+{% block content %}
+
+    <div class="container theme-showcase" style="min-height: 600px">
+        <h1>上传文件</h1>
+
+        <form id="upload_form" action="/api/file/upload" method="post" enctype="multipart/form-data">
+            <input id="input_file" type="file" name="md_file" accept=".md"><br>
+            <input id="submit" type="submit" value="上传" class="btn btn-default">
+        </form>
+        <h5>上传MD文件后会自动生成网页，稍等片刻，成功后会自动跳转</h5>
+
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    {{ super() }}
+{#    <script type="text/javascript" src="{{ url_for('static', filename='js/src/upload.js') }}"></script>#}
+{% endblock %}

@@ -4,8 +4,11 @@
 """Documentation"""
 import logging
 
+import os
+from generate import INPUT_CONTENT, generate
 from utils.helper import IndexData
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request, redirect, url_for
+from werkzeug.utils import secure_filename
 
 api = Blueprint(
     "index", __name__
@@ -53,6 +56,20 @@ def get_article_by_tag(tag):
     articles = {i: IndexData.get_index_data().get("article_index")[i] for i in aids}
     return jsonify(articles)
 
+
+@api.route("/file/upload", methods=["POST"])
+def upload_article():
+    """上传文件
+    1. 保存至本地
+    2. md转换为html
+    3. 重新加载索引信息
+    """
+    f = request.files["md_file"]
+    f_name = secure_filename(f.filename)
+    f.save(os.path.join(INPUT_CONTENT, f_name))
+    generate()
+    IndexData.reload_index_data()
+    return redirect(url_for("page_articles"))
 
 if __name__ == "__main__":
     pass
