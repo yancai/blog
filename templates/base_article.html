@@ -11,11 +11,15 @@
     <link href="{{ static_root }}css/blog/general.css" rel="stylesheet">
 
     <style type="text/css">
-        h2:before {
+        h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
             content: "";
             display: block;
             height: 55px;
             margin: -55px 0 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 30px;
         }
 
         .side-icon {
@@ -28,7 +32,7 @@
         }
 
         .sidebar-module {
-            max-width: 200px;
+            max-width: 250px;
         }
 
         .sidebar-title {
@@ -56,7 +60,7 @@
 
         .bs-docs-sidebar .nav > li > a {
             display: block;
-            padding: 4px 20px;
+            padding: 0px 20px;
             color: #767676;
             font-weight: 500;
             font-size: 13px;
@@ -80,7 +84,7 @@
 
         .bs-docs-sidebar .nav .nav {
             display: none;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
         .bs-docs-sidebar .nav .nav > li > a {
@@ -152,23 +156,32 @@
 
             <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 <div class="sidebar-module" data-spy="affix">
-                    {{ title_html }}
-                    <div class="sidebar-module-inset">
-                        <h5 class="sidebar-title"><i class="icon-lightbulb side-icon"></i>摘要</h5>
+                    <div>
+                        <h5 class="sidebar-title">
+                            <button class="btn btn-default"  data-toggle="collapse" href="#meta_box">
+                                开/合 文章属性
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="collapse in" id="meta_box">
+                        {{ title_html }}
+                        <div class="sidebar-module-inset">
+                            <h5 class="sidebar-title"><i class="icon-lightbulb side-icon"></i>摘要</h5>
 
-                        <p>{{ summary }}</p>
+                            <p>{{ summary }}</p>
+                        </div>
+                        <hr class="side-hr">
+                        <div>
+                            <h5 class="sidebar-title"><i class="icon-user side-icon"></i>作者</h5>
+                            <div>{{ authors }}</div>
+                        </div>
+                        <hr class="side-hr">
+                        <div>
+                            <h5 class="sidebar-title"><i class="icon-tags side-icon"></i>标签</h5>
+                            <div>{{ tags }}</div>
+                        </div>
+                        <hr class="side-hr">
                     </div>
-                    <hr class="side-hr">
-                    <div>
-                        <h5 class="sidebar-title"><i class="icon-user side-icon"></i>作者</h5>
-                        <div>{{ authors }}</div>
-                    </div>
-                    <hr class="side-hr">
-                    <div>
-                        <h5 class="sidebar-title"><i class="icon-tags side-icon"></i>标签</h5>
-                        <div>{{ tags }}</div>
-                    </div>
-                    <hr class="side-hr">
                     <div class="sidebar-module">
                         <h5 class="sidebar-title"><i class="icon-th-list side-icon"></i>目录</h5>
                         <nav id="side-menu" class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
