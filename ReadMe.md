@@ -20,18 +20,21 @@
 # 工程结构简介
 
     blog
-    │  blog.py      -- flask工程主文件
-    │  generate.py  -- Markdown生成html工具
-    │  ReadMe.md    -- 本文档
-    │  requirements.txt -- 依赖包
-    │  settings.py      -- flask 配置
+    ├─start.sh          -- linux启动脚本
+    ├─stop.sh           -- linux停止脚本
+    ├─start.bat         -- windows启动脚本
+    ├─blog.py           -- flask工程主文件
+    ├─generate.py       -- Markdown生成html工具
+    ├─ReadMe.md         -- 本文档
+    ├─requirements.txt  -- 依赖包
+    ├─settings.py       -- flask 配置
     │
-    ├─api               -- 数据查询接口
+    ├─api           -- 数据查询接口
     ├─in
-    │  │  About.md  -- 博客撰写方法说明
+    │  └─About.md   -- 博客撰写方法说明
     │
     ├─static        -- 静态资源文件夹
-    │  │  favicon.ico
+    │  ├─favicon.ico
     │  ├─css
     │  ├─font
     │  ├─fonts
