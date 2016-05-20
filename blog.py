@@ -69,7 +69,7 @@ def page_article_by_tag(tag):
     return render_template("articles_by_tag.html", tag=tag)
 
 
-@app.route("/upload")
+@app.route("/upload/")
 def page_upload():
     return render_template("upload.html")
 
