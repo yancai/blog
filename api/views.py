@@ -2,19 +2,16 @@
 # -*- coding:utf-8 -*-
 
 """Documentation"""
-import logging
 
 import os
 from generate import INPUT_CONTENT, generate
 from utils.helper import IndexData
-from flask import Blueprint, jsonify, request, redirect, url_for
+from flask import Blueprint, jsonify, request, redirect, url_for, current_app
 from werkzeug.utils import secure_filename
 
 api = Blueprint(
     "index", __name__
 )
-
-log = logging.getLogger(__name__)
 
 
 @api.route("/index/article/")
@@ -42,10 +39,33 @@ def get_author_index():
 def reload_index():
     """重新加载索引
     """
-    IndexData.reload_index_data()
-    return jsonify({
-        "msg": "ok"
-    })
+    try:
+        IndexData.reload_index_data()
+        return jsonify({
+            "msg": "ok"
+        })
+    except Exception as e:
+        current_app.logger.exception(e)
+        return jsonify({
+            "msg": "failed"
+        })
+
+
+@api.route("/index/generate/")
+def generate_index():
+    """生成索引信息
+    """
+    try:
+        generate()
+        IndexData.reload_index_data()
+        return jsonify({
+            "msg": "ok"
+        })
+    except Exception as e:
+        current_app.logger.exception(e)
+        return jsonify({
+            "msg": "failed"
+        })
 
 
 @api.route("/index/tag/<tag>/")
