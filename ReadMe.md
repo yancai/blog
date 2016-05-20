@@ -16,6 +16,8 @@
  1. 将你写好的.md文件丢到`generate.py`中`INPUT_CONTENT`所配置的目录中，默认为`./in`目录；
  2. 运行`generate.py`文件，生成html页面文件和索引文件；
  3. 运行`blog.py`文件，启动flask网站，用以对外提供访问html文件；
+ 4. 访问`http://127.0.0.1:5000/api/index/generate/`生成索引文件；
+ 5. 访问`http://127.0.0.1:5000/upload/`上传你编写好的md文件；
 
 # 工程结构简介
 
