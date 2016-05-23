@@ -34,7 +34,7 @@ def page_index():
     return render_template("index.html")
 
 
-@app.route("/about")
+@app.route("/about/")
 def page_about():
     """页面-关于
     """
