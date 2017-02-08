@@ -135,6 +135,22 @@
             }
         }
 
+        .icon-link {
+            color: inherit;
+            opacity: .75;
+            -webkit-transition: color .16s linear;
+            -o-transition: color .16s linear;
+            transition: color .16s linear;
+            margin-left: -1em;
+            padding-right: 1em;
+            position: absolute;
+        }
+
+        .icon-link:hover, .icon-link:focus {
+            text-decoration: none;
+            opacity: 1;
+        }
+
     </style>
 
 {% endblock %}
@@ -200,6 +216,7 @@
 {% block ext_js %}
     <script src="{{ static_root }}js/third/jquery.min.js"></script>
     <script src="{{ static_root }}js/third/bootstrap.min.js"></script>
+    <script src="{{ static_root }}js/src/article_page.js"></script>
     <script type="application/javascript">
         $(".toc ul").addClass("nav");
         $(".toc ul:first").addClass("bs-docs-sidenav");
