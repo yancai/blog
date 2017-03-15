@@ -1,3 +1,4 @@
 env
 .idea
 static/out/*
+*.pyc
