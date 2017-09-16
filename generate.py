@@ -13,6 +13,8 @@ from jinja2 import Environment, FileSystemLoader
 from markdown import Markdown
 import pypinyin
 
+BASE_DIR = os.path.dirname(__file__)
+os.chdir(BASE_DIR)
 
 # 静态文件路径，默认为`/static/`
 # 表示使用flask发布网站时的`http://ip:port/static/`目录
@@ -20,15 +22,17 @@ import pypinyin
 # 注意，使用其他域名的静态文件时有可能引起跨域问题
 STATIC_ROOT = "/static/"
 
+
+
+
 # Markdown文件读取目录
-INPUT_CONTENT = "./in/"
+INPUT_CONTENT = os.path.join(BASE_DIR, 'in')
 
 # 索引文件
-INDEX_DAT = "./static/out/index.dat"
+INDEX_DAT = os.path.join(BASE_DIR, "static", "out", "index.dat")
 
 # html生成输出目录
-OUTPUT_CONTENT = "./static/out/"
-
+OUTPUT_CONTENT = os.path.join(BASE_DIR, "static","out")
 env = Environment(
     loader=FileSystemLoader("templates")
 )
@@ -126,7 +130,7 @@ def create_index(filename, meta):
     :return:
     """
 
-    filename = codecs.decode(filename, "gb2312")
+    # filename = codecs.decode(filename, "utf-8")
 
     index_tags(meta.get("tags", []), _current_file_index)
     index_authors(meta.get("authors", []), _current_file_index)
@@ -157,7 +161,6 @@ def get_out_dir(md_file):
     :param md_file:
     :return:
     """
-
     return os.path.join(OUTPUT_CONTENT, _current_file_index + ".html")
 
 
@@ -224,7 +227,6 @@ def render(md_file):
         meta = md.Meta if hasattr(md, "Meta") else {}
         toc = md.toc if hasattr(md, "toc") else ""
         create_index(md_file, meta)
-
         template = env.get_template("base_article.html")
         text = template.render(
             blog_content=html,
@@ -256,7 +258,7 @@ def scan_md():
     for f in _MD_FILES:
         file_base_name = os.path.splitext(os.path.basename(f))[0]
         _current_file_index = str2pinyin(
-            codecs.decode(file_base_name, "gb2312")
+            file_base_name
         )
         _pinyin_names.add(_current_file_index)
         gen(f)
