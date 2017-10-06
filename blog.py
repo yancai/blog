@@ -73,6 +73,7 @@ def page_article_by_tag(tag):
 def page_upload():
     return render_template("upload.html")
 
+
 # 注册api接口的blueprint
 app.register_blueprint(api, url_prefix="/api")
 

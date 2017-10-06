@@ -36,5 +36,6 @@ class IndexData(object):
         """
         cls._load_data()
 
+
 if __name__ == "__main__":
     pass

@@ -91,5 +91,6 @@ def upload_article():
     IndexData.reload_index_data()
     return redirect(url_for("page_articles"))
 
+
 if __name__ == "__main__":
     pass

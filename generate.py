@@ -8,6 +8,7 @@ import os
 import codecs
 import shelve
 from datetime import datetime
+import sys
 
 from jinja2 import Environment, FileSystemLoader
 from markdown import Markdown
@@ -33,6 +34,7 @@ env = Environment(
     loader=FileSystemLoader("templates")
 )
 
+PY_VERSION = "3" if sys.version >= "3" else "2"
 
 # 标签倒排索引
 TAG_INVERTED_INDEX = {}
@@ -118,6 +120,10 @@ def index_authors(authors, fid):
             AUTHOR_INVERTED_INDEX[author] = [fid]
 
 
+def decode_str(str_):
+    return codecs.decode(str_, "gb2312") if PY_VERSION == "2" else str_
+
+
 def create_index(filename, meta):
     """创建索引信息
     :param filename: 文件从INPUT_CONTENT开始的全路径
@@ -126,7 +132,7 @@ def create_index(filename, meta):
     :return:
     """
 
-    filename = codecs.decode(filename, "gb2312")
+    filename = decode_str(filename)
 
     index_tags(meta.get("tags", []), _current_file_index)
     index_authors(meta.get("authors", []), _current_file_index)
@@ -256,7 +262,7 @@ def scan_md():
     for f in _MD_FILES:
         file_base_name = os.path.splitext(os.path.basename(f))[0]
         _current_file_index = str2pinyin(
-            codecs.decode(file_base_name, "gb2312")
+            decode_str(file_base_name)
         )
         _pinyin_names.add(_current_file_index)
         gen(f)
