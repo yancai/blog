@@ -13,7 +13,7 @@ import sys
 from jinja2 import Environment, FileSystemLoader
 from markdown import Markdown
 import pypinyin
-
+from settings import BASE_DIR
 
 # 静态文件路径，默认为`/static/`
 # 表示使用flask发布网站时的`http://ip:port/static/`目录
@@ -22,16 +22,16 @@ import pypinyin
 STATIC_ROOT = "/static/"
 
 # Markdown文件读取目录
-INPUT_CONTENT = "./in/"
+INPUT_CONTENT = os.path.join(BASE_DIR, "in")
 
 # 索引文件
-INDEX_DAT = "./static/out/index.dat"
+INDEX_DAT = os.path.join(BASE_DIR, "static", "out", "index.dat")
 
 # html生成输出目录
-OUTPUT_CONTENT = "./static/out/"
+OUTPUT_CONTENT = os.path.join(BASE_DIR, "static", "out")
 
 env = Environment(
-    loader=FileSystemLoader("templates")
+    loader=FileSystemLoader(os.path.join(BASE_DIR,"templates"))
 )
 
 PY_VERSION = "3" if sys.version >= "3" else "2"
@@ -55,7 +55,7 @@ TITLE_HTML_TEMPLATE = u"<div class='sidebar-module-inset'><h5 class='sidebar-tit
 
 
 def _reload_global():
-    global TAG_INVERTED_INDEX, AUTHOR_INVERTED_INDEX, ARTICLE_INDEX,\
+    global TAG_INVERTED_INDEX, AUTHOR_INVERTED_INDEX, ARTICLE_INDEX, \
         _MD_FILES, _current_file_index, _pinyin_names
 
     TAG_INVERTED_INDEX = {}

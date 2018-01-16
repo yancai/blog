@@ -2,8 +2,8 @@
 # -*- coding:utf-8 -*-
 
 """Documentation"""
-
-INDEX_DAT = "./static/out/index.dat"
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if __name__ == "__main__":
     pass

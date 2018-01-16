@@ -4,7 +4,7 @@
 """Documentation"""
 import shelve
 
-from settings import INDEX_DAT
+from generate import INDEX_DAT
 
 
 class IndexData(object):
