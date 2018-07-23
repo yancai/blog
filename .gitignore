@@ -1,3 +1,5 @@
 .idea
 static/out/*
 *.pyc
+out.log
+pid
