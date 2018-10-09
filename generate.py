@@ -2,12 +2,11 @@
 # -*- coding:utf-8 -*-
 
 """Documentation"""
-import json
-import shutil
-import os
 import codecs
-import shelve
 from datetime import datetime
+import json
+import os
+import shutil
 import sys
 
 from jinja2 import Environment, FileSystemLoader
@@ -18,18 +17,16 @@ import pypinyin
 # 表示使用flask发布网站时的`http://ip:port/static/`目录
 # 也可指定为固定地址的静态文件url，例如："http://192.168.62.47:5000/static/"
 # 注意，使用其他域名的静态文件时有可能引起跨域问题
+# TODO: 当前很多地方写的是从`/`开始的绝对路径，需要修改为使用`STATIC_ROOT`
 STATIC_ROOT = "/"
 
 # Markdown文件读取目录
 INPUT_CONTENT = "./in/"
 
-# 索引文件
-INDEX_DAT = "./static/pages/index.dat"
-
+# 数据目录
 DIR_DATA = "./static/data/"
 
 # html生成输出目录
-OUTPUT_CONTENT = "./static/pages/"
 DIR_STATIC = "./static/"
 DIR_PAGES = DIR_STATIC + "pages/"
 DIR_ARTICLES = DIR_PAGES + "articles/"
@@ -74,8 +71,8 @@ def _reload_global():
 def clean():
     """清理输出文件夹
     """
-    if os.path.exists(OUTPUT_CONTENT):
-        shutil.rmtree(OUTPUT_CONTENT)
+    if os.path.exists(DIR_PAGES):
+        shutil.rmtree(DIR_PAGES)
     if os.path.exists(DIR_DATA):
         shutil.rmtree(DIR_DATA)
 
@@ -100,11 +97,6 @@ def str2pinyin(hans, style=pypinyin.FIRST_LETTER):
 def dump_index():
     """持久化索引信息
     """
-    # dat = shelve.open(INDEX_DAT)
-    # dat["article_index"] = ARTICLE_INDEX
-    # dat["tag_inverted_index"] = TAG_INVERTED_INDEX
-    # dat["author_inverted_index"] = AUTHOR_INVERTED_INDEX
-    # dat.close()
 
     if not os.path.exists(DIR_DATA):
         os.makedirs(DIR_DATA)
@@ -314,7 +306,6 @@ def generate():
     scan_md()
     render_pages()
     dump_index()
-    pass
 
 
 def render_index():
@@ -342,7 +333,6 @@ def render_tags():
     template = env.get_template("tags.html")
     text = template.render()
     save_html(DIR_PAGES + "tags.html", text)
-    pass
 
 
 def render_articles_by_tag():
@@ -366,5 +356,6 @@ def render_pages():
 
 
 if __name__ == "__main__":
+    # TODO: 添加使用命令行方式：生成、清理、启动
     generate()
     pass
