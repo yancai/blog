@@ -1,7 +1,7 @@
 var ARTICLE_ITEM_TEMPLATE = "" +
     "<div>" +
     "<div>" +
-    "<span><a class='h3 ls-article-title' href='/article/{articleId}/'>{title}</a></span>" +
+    "<span><a class='h3 ls-article-title' href='/pages/articles/{articleId}.html'>{title}</a></span>" +
     "<div>" +
     "<span class='article-property' title='最后修改时间'><i class='article-icon icon-calendar'></i>{modify_time}</span>" +
     "<span class='article-property' title='作者'><i class='article-icon icon-user'></i>{author}</span>" +
@@ -12,7 +12,7 @@ var ARTICLE_ITEM_TEMPLATE = "" +
     "<hr>" +
     "</div>";
 
-var TAG_TEMPLATE = "<a href='/tag/{tag}/' class='tag-index'>{tag}</a>";
+var TAG_TEMPLATE = "<a href='/pages/tags/{tag}.html' class='tag-index'>{tag}</a>";
 var AUTHOR_TEMPLATE = "<a href='' class='author-index'>{author}</a>";
 
 function renderTags(tags) {
@@ -70,17 +70,51 @@ function renderArticleItem(data) {
     $("#count").text(count + " 篇");
 }
 
-$(document).ready(function () {
+function get_articles_by_tag(tag) {
     var tag = $("#tag").text();
-    var url = "/api/index/tag/" + tag + "/";
+
     $.ajax({
         type: "get",
         dateType: "json",
-        url: url,
+        url: "/data/tags.json",
         success: function (data) {
-            renderArticleItem(data);
+
         }
+    })
+}
+
+function get_articles() {
+    $.ajax({
+        type: "get",
+        dateType: "json",
+        url: "/data/tags.json",
+        success: function (data) {
+
+        }
+    })
+}
+
+$(document).ready(function () {
+    let tag = $("#tag").text();
+
+    $.ajax({
+        type: "get",
+        dateType: "json",
+        url: "/data/articles.json",
+    }).then(function (article_map) {
+        $.ajax({
+            type: "get",
+            dateType: "json",
+            url: "/data/tags.json",
+            success: function (data) {
+                let articles = data[tag];
+                let articles_info = {};
+                articles.forEach(function (value, i) {
+                    articles_info[value] = article_map[value]
+                });
+                renderArticleItem(articles_info)
+            }
+        });
     });
+
 });
-
-

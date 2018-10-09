@@ -1,5 +1,7 @@
 .idea
-static/out/*
+static/pages/*
+static/index.html
+in/*.md
 *.pyc
 out.log
 pid

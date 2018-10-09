@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 """Documentation"""
-
+import json
 import shutil
 import os
 import codecs
@@ -14,21 +14,26 @@ from jinja2 import Environment, FileSystemLoader
 from markdown import Markdown
 import pypinyin
 
-
 # 静态文件路径，默认为`/static/`
 # 表示使用flask发布网站时的`http://ip:port/static/`目录
 # 也可指定为固定地址的静态文件url，例如："http://192.168.62.47:5000/static/"
 # 注意，使用其他域名的静态文件时有可能引起跨域问题
-STATIC_ROOT = "/static/"
+STATIC_ROOT = "/"
 
 # Markdown文件读取目录
 INPUT_CONTENT = "./in/"
 
 # 索引文件
-INDEX_DAT = "./static/out/index.dat"
+INDEX_DAT = "./static/pages/index.dat"
+
+DIR_DATA = "./static/data/"
 
 # html生成输出目录
-OUTPUT_CONTENT = "./static/out/"
+OUTPUT_CONTENT = "./static/pages/"
+DIR_STATIC = "./static/"
+DIR_PAGES = DIR_STATIC + "pages/"
+DIR_ARTICLES = DIR_PAGES + "articles/"
+DIR_TAGS = DIR_PAGES + "tags/"
 
 env = Environment(
     loader=FileSystemLoader("templates")
@@ -49,13 +54,13 @@ _MD_FILES = []
 _current_file_index = None
 _pinyin_names = set()
 
-TAG_HTML_TEMPLATE = u"<a href='/tag/{tag}/' class='tag-index'>{tag}</a>"
+TAG_HTML_TEMPLATE = u"<a href='/pages/tags/{tag}.html' class='tag-index'>{tag}</a>"
 AUTHOR_HTML_TEMPLATE = u"<a href='' class='tag-index'>{author}</a>"
 TITLE_HTML_TEMPLATE = u"<div class='sidebar-module-inset'><h5 class='sidebar-title'><i class='icon-circle-blank side-icon'></i>标题</h5><p>{title_str}</p></div>"
 
 
 def _reload_global():
-    global TAG_INVERTED_INDEX, AUTHOR_INVERTED_INDEX, ARTICLE_INDEX,\
+    global TAG_INVERTED_INDEX, AUTHOR_INVERTED_INDEX, ARTICLE_INDEX, \
         _MD_FILES, _current_file_index, _pinyin_names
 
     TAG_INVERTED_INDEX = {}
@@ -71,6 +76,8 @@ def clean():
     """
     if os.path.exists(OUTPUT_CONTENT):
         shutil.rmtree(OUTPUT_CONTENT)
+    if os.path.exists(DIR_DATA):
+        shutil.rmtree(DIR_DATA)
 
 
 def parse_time(timestamp, pattern="%Y-%m-%d %H:%M:%S"):
@@ -93,11 +100,23 @@ def str2pinyin(hans, style=pypinyin.FIRST_LETTER):
 def dump_index():
     """持久化索引信息
     """
-    dat = shelve.open(INDEX_DAT)
-    dat["article_index"] = ARTICLE_INDEX
-    dat["tag_inverted_index"] = TAG_INVERTED_INDEX
-    dat["author_inverted_index"] = AUTHOR_INVERTED_INDEX
-    dat.close()
+    # dat = shelve.open(INDEX_DAT)
+    # dat["article_index"] = ARTICLE_INDEX
+    # dat["tag_inverted_index"] = TAG_INVERTED_INDEX
+    # dat["author_inverted_index"] = AUTHOR_INVERTED_INDEX
+    # dat.close()
+
+    if not os.path.exists(DIR_DATA):
+        os.makedirs(DIR_DATA)
+
+    with open(DIR_DATA + "articles.json", 'w+', encoding='utf-8') as f:
+        json.dump(ARTICLE_INDEX, f)
+
+    with open(DIR_DATA + "tags.json", 'w+', encoding='utf-8') as f:
+        json.dump(TAG_INVERTED_INDEX, f)
+
+    with open(DIR_DATA + "authors.json", 'w+', encoding='utf-8') as f:
+        json.dump(AUTHOR_INVERTED_INDEX, f)
 
 
 def index_tags(tags, fid):
@@ -164,7 +183,7 @@ def get_out_dir(md_file):
     :return:
     """
 
-    return os.path.join(OUTPUT_CONTENT, _current_file_index + ".html")
+    return os.path.join(DIR_ARTICLES, _current_file_index + ".html")
 
 
 def save_html(out_path, html):
@@ -218,13 +237,19 @@ def render(md_file):
         md = Markdown(
             extensions=[
                 "fenced_code",
-                "codehilite(css_class=highlight,linenums=None)",
+                "codehilite",
                 "meta",
                 "admonition",
                 "tables",
                 "toc",
                 "wikilinks",
             ],
+            extension_configs={
+                "codehilite": {
+                    "css_class": "highlight",
+                    "linenums": None,
+                }
+            }
         )
         html = md.convert(text)
         meta = md.Meta if hasattr(md, "Meta") else {}
@@ -236,10 +261,13 @@ def render(md_file):
             blog_content=html,
             static_root=STATIC_ROOT,
             title=ARTICLE_INDEX[_current_file_index].get("title"),
-            title_html=render_title_html(ARTICLE_INDEX[_current_file_index].get("title")),
+            title_html=render_title_html(
+                ARTICLE_INDEX[_current_file_index].get("title")),
             summary=ARTICLE_INDEX[_current_file_index].get("summary", ""),
-            authors=render_authors_html(ARTICLE_INDEX[_current_file_index].get("authors")),
-            tags=render_tags_html(ARTICLE_INDEX[_current_file_index].get("tags")),
+            authors=render_authors_html(
+                ARTICLE_INDEX[_current_file_index].get("authors")),
+            tags=render_tags_html(
+                ARTICLE_INDEX[_current_file_index].get("tags")),
             toc=toc,
         )
 
@@ -284,8 +312,57 @@ def generate():
 
     load_md_files(INPUT_CONTENT)
     scan_md()
+    render_pages()
     dump_index()
     pass
+
+
+def render_index():
+    """渲染 页面-首页
+
+    """
+    template = env.get_template("index.html")
+    text = template.render()
+    save_html(DIR_STATIC + "index.html", text)
+
+
+def render_articles():
+    """渲染 页面-全部文章列表
+
+    """
+    template = env.get_template("articles.html")
+    text = template.render()
+    save_html(DIR_PAGES + "articles.html", text)
+
+
+def render_tags():
+    """渲染 页面-全部标签
+
+    """
+    template = env.get_template("tags.html")
+    text = template.render()
+    save_html(DIR_PAGES + "tags.html", text)
+    pass
+
+
+def render_articles_by_tag():
+    """渲染 页面-指定标签的文章列表
+
+    """
+    for tag in TAG_INVERTED_INDEX:
+        template = env.get_template("articles_by_tag.html")
+        text = template.render(tag=tag)
+        save_html(DIR_TAGS + tag + ".html", text)
+
+
+def render_pages():
+    """渲染基础页面
+
+    """
+    render_index()
+    render_articles()
+    render_tags()
+    render_articles_by_tag()
 
 
 if __name__ == "__main__":

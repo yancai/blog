@@ -1,7 +1,7 @@
 var ARTICLE_ITEM_TEMPLATE = "" +
     "<div>" +
     "<div>" +
-    "<div class='ls-article-title'><a class='h3' href='/article/{articleId}/'>{title}</a></div>" +
+    "<div class='ls-article-title'><a class='h3' href='/pages/articles/{articleId}.html'>{title}</a></div>" +
     "<div>" +
     "<span class='article-property' title='最后修改时间'><i class='article-icon icon-calendar'></i>{modify_time}</span>" +
     "<span class='article-property' title='作者'><i class='article-icon icon-user'></i>{author}</span>" +
@@ -12,7 +12,7 @@ var ARTICLE_ITEM_TEMPLATE = "" +
     "<hr>" +
     "</div>";
 
-var TAG_TEMPLATE = "<a href='/tag/{tag}/' class='tag-index'>{tag}</a>";
+var TAG_TEMPLATE = "<a href='/pages/tags/{tag}.html' class='tag-index'>{tag}</a>";
 var AUTHOR_TEMPLATE = "<a href='' class='author-index'>{author}</a>";
 
 function renderTags(tags) {
@@ -68,7 +68,7 @@ function renderArticleItem(data) {
 }
 
 $(document).ready(function () {
-    var url = "/api/index/article/";
+    var url = "/data/articles.json";
     $.ajax({
         type: "get",
         dateType: "json",

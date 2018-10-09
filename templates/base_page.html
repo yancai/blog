@@ -1,23 +1,17 @@
 {% extends "base.html" %}
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog/general.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/blog/general.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
 {% endblock %}
 
-{% block articles_url %}
-    {{ url_for("page_articles") }}
-{% endblock %}
+{% block articles_url %}/pages/articles.html{% endblock %}
 
-{% block tags_url %}
-    {{ url_for("page_tags") }}
-{% endblock %}
+{% block tags_url %}/pages/tags.html{% endblock %}
 
-{% block about_url %}
-    {{ url_for("page_about") }}
-{% endblock %}
+{% block about_url %}/pages/articles/About.html{% endblock %}
 
 {% block ext_js %}
-    <script type="text/javascript" src="{{ url_for('static', filename='js/third/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/third/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="/js/third/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/third/bootstrap.min.js"></script>
 {% endblock %}
