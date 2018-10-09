@@ -10,6 +10,6 @@ fi
 
 base=`dirname $0`
 
-nohup $py $base/blog.py > $base/out.log &
+nohup $py -m http.server 9000 -d static > $base/out.log &
 
 echo $! > $base/pid
