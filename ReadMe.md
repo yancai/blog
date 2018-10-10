@@ -3,6 +3,10 @@
 本工程是一个基于[Jinja2](http://jinja.pocoo.org/)和[Python Markdown](https://pythonhosted.org/Markdown/)开发的简易博客。  
 本工程使用python代码读取Markdown文件，并生成静态文件以提供访问，和master分支版本相比不需要使用后端服务。
 
+
+当前dev分支代码正在开发中...  
+相对稳定的功能可以使用[master](https://github.com/yancai/blog/tree/master)分支
+
 ## 待完善其它说明
 
 ## TODO
