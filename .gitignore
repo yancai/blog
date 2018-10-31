@@ -1,5 +1,6 @@
 .idea
 static/pages/*
+static/data/*.json
 static/index.html
 in/*.md
 *.pyc

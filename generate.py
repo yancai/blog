@@ -17,7 +17,6 @@ import pypinyin
 # 表示使用flask发布网站时的`http://ip:port/static/`目录
 # 也可指定为固定地址的静态文件url，例如："http://192.168.62.47:5000/static/"
 # 注意，使用其他域名的静态文件时有可能引起跨域问题
-# TODO: 当前很多地方写的是从`/`开始的绝对路径，需要修改为使用`STATIC_ROOT`
 STATIC_ROOT = "/"
 
 # Markdown文件读取目录
@@ -313,7 +312,9 @@ def render_index():
 
     """
     template = env.get_template("index.html")
-    text = template.render()
+    text = template.render(
+        static_root=STATIC_ROOT
+    )
     save_html(DIR_STATIC + "index.html", text)
 
 
@@ -322,7 +323,9 @@ def render_articles():
 
     """
     template = env.get_template("articles.html")
-    text = template.render()
+    text = template.render(
+        static_root=STATIC_ROOT
+    )
     save_html(DIR_PAGES + "articles.html", text)
 
 
@@ -331,7 +334,9 @@ def render_tags():
 
     """
     template = env.get_template("tags.html")
-    text = template.render()
+    text = template.render(
+        static_root=STATIC_ROOT
+    )
     save_html(DIR_PAGES + "tags.html", text)
 
 
@@ -341,7 +346,10 @@ def render_articles_by_tag():
     """
     for tag in TAG_INVERTED_INDEX:
         template = env.get_template("articles_by_tag.html")
-        text = template.render(tag=tag)
+        text = template.render(
+            tag=tag,
+            static_root=STATIC_ROOT
+        )
         save_html(DIR_TAGS + tag + ".html", text)
 
 

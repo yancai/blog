@@ -157,9 +157,9 @@
 
 {% block body_prop %}data-spy="scroll" data-target="#side-menu"{% endblock %}
 
-{% block articles_url %}/pages/articles.html{% endblock %}
-{% block tags_url %}/pages/tags.html{% endblock %}
-{% block about_url %}/pages/articles/About.html{% endblock %}
+{% block articles_url %}{{ static_root }}pages/articles.html{% endblock %}
+{% block tags_url %}{{ static_root }}pages/tags.html{% endblock %}
+{% block about_url %}{{ static_root }}pages/articles/About.html{% endblock %}
 
 {% block content %}
 
